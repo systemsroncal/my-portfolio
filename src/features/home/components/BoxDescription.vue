@@ -48,13 +48,12 @@ watchEffect((onInvalidate) => {
       if (!isMobile) {
         tl.fromTo(
           wrapperEl,
-          { clipPath: "inset(0% 0% 0% 100%)" },
-          { clipPath: "inset(0% 0% 0% 0%)", duration: 0.3, ease: "none" },
+          { opacity: 0, y: 20, filter: "blur(6px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out" },
           0,
         );
       } else {
-        // On mobile, ensure clipPath is set to visible immediately
-        gsap.set(wrapperEl, { clipPath: "inset(0% 0% 0% 0%)" });
+        gsap.set(wrapperEl, { opacity: 1, y: 0, filter: "blur(0px)" });
       }
 
       for (let i = 0; i < timelines.value.length; i++) {
@@ -99,10 +98,10 @@ const handleTimelineCreated = (timeline: gsap.core.Timeline, delay: number) => {
     <div ref="wrapperRef" class="box-description">
       <div class="box-description-content">
         <div class="box-description-details">
-          <p class="box-description-details-name">David</p>
+          <p class="box-description-details-name">Enrique</p>
           <div class="box-description-details-location">
             <PinIcon class="box-description-details-location-icon" />
-            <p class="box-description-details-location-copy">{{ t("germany") }}</p>
+            <p class="box-description-details-location-copy">{{ t("location") }}</p>
           </div>
         </div>
         <div class="box-description-line"></div>

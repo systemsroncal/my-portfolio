@@ -91,6 +91,16 @@ const classes = computed(() => ["tag", `tag-variant-${props.variant}`]);
       background-color: #95630e;
       color: white;
     }
+
+    &-php {
+      background-color: #777bb4;
+      color: white;
+    }
+
+    &-wordpress {
+      background-color: #21759b;
+      color: white;
+    }
   }
 }
 </style>

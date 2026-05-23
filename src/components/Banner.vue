@@ -15,7 +15,7 @@ const appearingTl = ref<gsap.core.Timeline | null>(null);
 const bannerRef = ref<HTMLDivElement | null>(null);
 const backgroundRef = ref<HTMLDivElement | null>(null);
 
-const DURATION = 0.6;
+const DURATION = 0.55;
 
 const handleTimelineCreated = (timeline: gsap.core.Timeline) => {
   appearingTl.value = timeline;
@@ -24,12 +24,10 @@ const handleTimelineCreated = (timeline: gsap.core.Timeline) => {
 watchEffect((onInvalidate) => {
   if (!appearingTl.value || !bannerRef.value || !backgroundRef.value || !props.animated || !props.copy) return;
 
-  // Create wrapper timeline with ScrollTrigger
   const tl = gsap.timeline({
     onStart: () => {
       appearingTl.value?.play();
     },
-
     scrollTrigger: {
       trigger: bannerRef.value,
       start: "top bottom",
@@ -37,13 +35,13 @@ watchEffect((onInvalidate) => {
     },
   });
 
-  const progress = { value: 0 };
-  tl.to(progress, { value: 1, duration: DURATION }, 0);
-
-  // Animate background scale up while text is animating
-  const textDuration = appearingTl.value.duration();
-  gsap.set(backgroundRef.value, { scaleX: 0 });
-  tl.fromTo(backgroundRef.value, { scaleX: 0 }, { scaleX: 1, duration: textDuration, ease: "power2.out" }, 0);
+  gsap.set(backgroundRef.value, { opacity: 0, y: 8 });
+  tl.fromTo(
+    backgroundRef.value,
+    { opacity: 0, y: 8 },
+    { opacity: 1, y: 0, duration: DURATION, ease: "power3.out" },
+    0,
+  );
 
   onInvalidate(() => {
     tl.kill();
@@ -57,7 +55,7 @@ watchEffect((onInvalidate) => {
     <div class="banner-copy" :class="`banner-copy-size-${resolvedSize}`">
       <AppearingText
         :text="props.copy"
-        :steps="2"
+        :steps="3"
         :duration="DURATION"
         @timeline:created="handleTimelineCreated"
         v-if="props.animated"
@@ -81,7 +79,7 @@ watchEffect((onInvalidate) => {
     left: 0;
     width: 100%;
     height: 100%;
-    transform-origin: left center;
+    border-radius: var(--radius-sm);
   }
 
   &-size {

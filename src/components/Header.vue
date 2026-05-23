@@ -13,6 +13,7 @@ import SoundsToggle from "./SoundsToggle.vue";
 import { isFeatureEnabled } from "../utils/features";
 import { useRouter } from "../composables/useRouter";
 import { useFirstRoute } from "../composables/useFirstRoute";
+import { toggleMobileNav, mobileNavOpen } from "../composables/useMobileNav";
 
 const router = useRouter();
 const { isFirstRoute } = useFirstRoute();
@@ -68,6 +69,20 @@ const getInTouchClassNames = computed(() => {
 <template>
   <header :class="classNames">
     <div class="header-left">
+      <button
+        v-if="projectId === null"
+        type="button"
+        class="header-menu-toggle"
+        :class="{ 'header-menu-toggle-open': mobileNavOpen }"
+        :aria-label="mobileNavOpen ? t('menu-close') : t('menu-open')"
+        @click="toggleMobileNav"
+        data-sound="click"
+        data-cursor="circle-white"
+      >
+        <span class="header-menu-toggle-line"></span>
+        <span class="header-menu-toggle-line"></span>
+        <span class="header-menu-toggle-line"></span>
+      </button>
       <ButtonRound
         v-if="projectId !== null"
         variant="accent"
@@ -157,6 +172,65 @@ const getInTouchClassNames = computed(() => {
     left: var(--space-outer);
     top: 50%;
     transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    pointer-events: auto;
+  }
+
+  &-menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    border: var(--stroke-sm) solid var(--color-grayscale-400);
+    border-radius: 50%;
+    background: var(--color-beige-500);
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+
+    @include mixins.mq("lg") {
+      display: none;
+    }
+
+    &-line {
+      display: block;
+      width: 18px;
+      height: 2px;
+      margin: 0 auto;
+      background: var(--color-text-400);
+      border-radius: 2px;
+      transition:
+        transform 0.25s ease,
+        opacity 0.25s ease;
+    }
+
+    &-open {
+      .header-menu-toggle-line:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+
+      .header-menu-toggle-line:nth-child(2) {
+        opacity: 0;
+      }
+
+      .header-menu-toggle-line:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+    }
+  }
+
+  .header-dark &-menu-toggle {
+    background: var(--color-dark-blue-500);
+    border-color: rgba(255, 255, 255, 0.25);
+
+    .header-menu-toggle-line {
+      background: var(--color-white-400);
+    }
   }
 
   &-get-in-touch {

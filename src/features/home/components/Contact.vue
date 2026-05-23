@@ -21,6 +21,7 @@ onUnmounted(() => {
   <div class="contact grid" ref="contactElement">
     <div class="contact-content">
       <h2 class="contact-title" v-html="t('lets-work-together')"></h2>
+      <p class="contact-subtitle">{{ t("contact-subtitle") }}</p>
       <Social variant="background" />
     </div>
   </div>
@@ -74,6 +75,13 @@ onUnmounted(() => {
     @include mixins.mq("xl") {
       font-size: var(--font-size-title-xl);
     }
+  }
+
+  &-subtitle {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-copy);
+    max-width: 420px;
+    opacity: 0.85;
   }
 }
 </style>
