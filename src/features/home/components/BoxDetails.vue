@@ -49,13 +49,12 @@ watchEffect((onInvalidate) => {
       if (isLandscape) {
         tl.fromTo(
           wrapperEl,
-          { clipPath: "inset(0% 0% 0% 100%)" },
-          { clipPath: "inset(0% 0% 0% 0%)", duration: 0.3, ease: "none" },
+          { opacity: 0, y: 20, filter: "blur(6px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out" },
           0,
         );
       } else {
-        // On portrait, set clipPath immediately without animation
-        gsap.set(wrapperEl, { clipPath: "inset(0% 0% 0% 0%)" });
+        gsap.set(wrapperEl, { opacity: 1, y: 0, filter: "blur(0px)" });
       }
 
       // Only add timeline animations on landscape
@@ -104,7 +103,7 @@ const handleTimelineCreated = (timeline: gsap.core.Timeline, delay: number) => {
       <div class="box-details-content">
         <div class="box-details-title">
           <AppearingText
-            text="David"
+            text="Enrique"
             :steps="1"
             :duration="0.35"
             @timeline:created="(tl: gsap.core.Timeline) => handleTimelineCreated(tl, 0)"
@@ -114,9 +113,9 @@ const handleTimelineCreated = (timeline: gsap.core.Timeline, delay: number) => {
           <div class="box-details-item">
             <PinIcon class="box-details-icon" />
             <AppearingText
-              v-if="t('germany')"
+              v-if="t('location')"
               class="box-details-content-copy"
-              :text="t('germany')"
+              :text="t('location')"
               :steps="3"
               :duration="0.35"
               @timeline:created="(tl: gsap.core.Timeline) => handleTimelineCreated(tl, 0.1)"

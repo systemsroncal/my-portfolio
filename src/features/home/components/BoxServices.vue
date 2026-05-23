@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect, onBeforeUnmount } from "vue";
 import gsap from "gsap";
-import { locale } from "../../../i18n/store";
 import { t } from "../../../i18n/utils/translate";
 import AppearingText from "../../../components/AppearingText.vue";
 import { BREAKPOINTS } from "../../../utils/sizes";
 import { Vector3 } from "three";
 import ProjectedElement from "../../../components/ProjectedElement.vue";
+import { hologramSkills } from "../../../content/skills";
 
 const point = new Vector3(0.75, 2.75, 6.75);
 
@@ -47,13 +47,12 @@ watchEffect((onInvalidate) => {
       if (!isMobile) {
         tl.fromTo(
           wrapperEl,
-          { clipPath: "inset(0% 100% 0% 0%)" },
-          { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: "none" },
+          { opacity: 0, y: 20, filter: "blur(6px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" },
           0,
         );
       } else {
-        // On mobile, ensure clipPath is set to visible immediately
-        gsap.set(wrapperEl, { clipPath: "inset(0% 0% 0% 0%)" });
+        gsap.set(wrapperEl, { opacity: 1, y: 0, filter: "blur(0px)" });
       }
 
       for (let i = 0; i < timelines.value.length; i++) {
@@ -106,25 +105,7 @@ const handleTimelineCreated = (timeline: gsap.core.Timeline, delay: number) => {
   timelines.value = updatedTimelines;
 };
 
-const SERVICES_EN = [
-  { name: "Three.js & WebGL" },
-  { name: "Node.js & WebSockets" },
-  { name: "React & Vue" },
-  { name: "Kubernetes & Redis" },
-  { name: "Real-time Multiplayer" },
-] as const satisfies { name: string }[];
-
-const SERVICES_DE = [
-  { name: "Three.js & WebGL" },
-  { name: "Node.js & WebSockets" },
-  { name: "React & Vue" },
-  { name: "Kubernetes & Redis" },
-  { name: "Echtzeit-Mehrspieler" },
-] as const satisfies { name: string }[];
-
-const services = computed(() => {
-  return locale.value === "en" ? SERVICES_EN : SERVICES_DE;
-});
+const services = computed(() => hologramSkills.map((name) => ({ name })));
 </script>
 
 <template>

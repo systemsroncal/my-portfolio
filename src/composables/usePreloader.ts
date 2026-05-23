@@ -25,7 +25,7 @@ export const usePreloader = () => {
   watch(
     progress,
     (newProgress) => {
-      const rect = document.querySelector(".preloader-rect") as HTMLElement;
+      const bar = document.querySelector(".preloader-bar") as HTMLElement;
       const preloader = document.querySelector(".preloader") as HTMLElement;
       if (newProgress === 1) {
         gsap.delayedCall(0.2, () => {
@@ -35,7 +35,7 @@ export const usePreloader = () => {
         });
       }
 
-      if (rect) rect.style.transform = `scaleY(${newProgress})`;
+      if (bar) bar.style.width = `${newProgress * 100}%`;
     },
     { immediate: true },
   );

@@ -2,27 +2,29 @@ import { watch } from "vue";
 import { loadTranslations } from "../utils/load";
 import { locale, translations } from "../store";
 import { onMounted } from "vue";
-import { LOCALES } from "../constants";
+import { LOCALES, LOCALE_DEFAULT } from "../constants";
 
 import type { Locale } from "../types";
 
+const STORAGE_KEY = "roncal-portfolio-locale";
+
 export const useTranslations = () => {
   onMounted(() => {
-    locale.value = window.localStorage.getItem("portfolio-locale") as Locale;
-    if (!locale.value) {
-      const preferredLocale = navigator.language.split("-")[0] as Locale;
+    const stored = window.localStorage.getItem(STORAGE_KEY) as Locale | null;
 
-      if (preferredLocale in LOCALES) {
-        locale.value = preferredLocale;
-      } else {
-        locale.value = "en";
-      }
+    if (stored && stored in LOCALES) {
+      locale.value = stored;
+    } else {
+      locale.value = LOCALE_DEFAULT;
     }
+
+    document.documentElement.lang = locale.value ?? LOCALE_DEFAULT;
   });
 
   watch(locale, () => {
     if (!locale.value) return;
-    window.localStorage.setItem("portfolio-locale", locale.value);
+    window.localStorage.setItem(STORAGE_KEY, locale.value);
+    document.documentElement.lang = locale.value;
   });
 
   watch(

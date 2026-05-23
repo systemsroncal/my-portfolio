@@ -1,8 +1,10 @@
-# Portfolio (2025)
+# Enrique Roncal — Portfolio
 
-Personal portfolio site: project case studies, lightweight 3D and shader demos, bilingual copy (English and German).
+Personal portfolio site for **Enrique Roncal**, Systems Engineer with 5+ years of web development experience. Bilingual copy (English and Spanish).
 
 Built with **Vue 3**, **TypeScript**, and **Vite**. Motion via **GSAP** and **Lenis**, 3D via **three.js**, audio via **Howler**. GLSL is compiled through **vite-plugin-glsl**.
+
+Based on the open-source portfolio by [David Heckhoff](https://github.com/davidhckh/portfolio-2025).
 
 ## Scripts
 
@@ -15,8 +17,9 @@ Built with **Vue 3**, **TypeScript**, and **Vite**. Motion via **GSAP** and **Le
 
 ## Content
 
-- **Projects**: `src/content/projects/{en,de}/<slug>.ts` — copy, tags, media, links. Slugs must align with `projectIds` in `src/content/projects/index.ts`.
+- **Projects**: `src/content/projects/{en,es}/<slug>.ts` — copy, tags, media, links. Slugs must align with `projectIds` in `src/content/projects/index.ts`.
 - **Previews / listing**: `src/content/projects/previews/`.
+- **Social links**: `src/content/social.ts`
 - **Tags**: variants and labels live in `src/components/tagVariants.ts` (used by `Tag.vue` and content types).
 
 ## Stack (high level)
