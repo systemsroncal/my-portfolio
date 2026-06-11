@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="CRM SaaS AWS">
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="80" y="80" width="1440" height="740" rx="28" fill="#f8f9fb" stroke="#e8ecf1" stroke-width="2"/>
+  <image href="logos/aws.svg" x="430" y="310" width="740" height="280" preserveAspectRatio="xMidYMid meet"/>
+</svg>

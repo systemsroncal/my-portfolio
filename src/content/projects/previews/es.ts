@@ -1,8 +1,4 @@
-import thumbnailStreakon from "../../../assets/thumbnails/streakon.webp";
-import thumbnailPokedex from "../../../assets/thumbnails/pokedex.webp";
-import thumbnailCubeWar from "../../../assets/thumbnails/cubewar.webp";
-import thumbnailQuibbo from "../../../assets/thumbnails/quibbo.webp";
-import thumbnailSharkie from "../../../assets/thumbnails/sharkie.webp";
+import { projectCovers } from "./covers";
 
 import type { ProjectPreview } from "../../types";
 
@@ -10,31 +6,31 @@ export default [
   {
     title: "CRM SaaS AWS",
     slug: "aws-crm",
-    thumbnail: thumbnailStreakon,
+    thumbnail: projectCovers["aws-crm"],
     description: "Microservicios e IA de voz en AWS",
   },
   {
     title: "Plataformas E-commerce",
     slug: "ecommerce",
-    thumbnail: thumbnailQuibbo,
+    thumbnail: projectCovers.ecommerce,
     description: "Tiendas en línea de alta disponibilidad",
   },
   {
     title: "Sistema Colegio IEPSADA",
     slug: "iepsada",
-    thumbnail: thumbnailPokedex,
+    thumbnail: projectCovers.iepsada,
     description: "Plataforma de gestión escolar",
   },
   {
     title: "Sistema de Matrícula",
     slug: "matricula",
-    thumbnail: thumbnailSharkie,
+    thumbnail: projectCovers.matricula,
     description: "Registro de estudiantes",
   },
   {
-    title: "Larry Ragland Dashboard",
+    title: "Larry R. Dashboard",
     slug: "larry-ragland",
-    thumbnail: thumbnailCubeWar,
+    thumbnail: projectCovers["larry-ragland"],
     description: "Plugin WordPress personalizado",
   },
 ] as const satisfies ProjectPreview[];

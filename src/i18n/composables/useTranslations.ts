@@ -3,6 +3,7 @@ import { loadTranslations } from "../utils/load";
 import { locale, translations } from "../store";
 import { onMounted } from "vue";
 import { LOCALES, LOCALE_DEFAULT } from "../constants";
+import { parseLegalRoute } from "../../composables/useLegalRoute";
 
 import type { Locale } from "../types";
 
@@ -10,12 +11,18 @@ const STORAGE_KEY = "roncal-portfolio-locale";
 
 export const useTranslations = () => {
   onMounted(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY) as Locale | null;
+    const legalRoute = parseLegalRoute(window.location.pathname);
 
-    if (stored && stored in LOCALES) {
-      locale.value = stored;
+    if (legalRoute) {
+      locale.value = legalRoute.locale;
     } else {
-      locale.value = LOCALE_DEFAULT;
+      const stored = window.localStorage.getItem(STORAGE_KEY) as Locale | null;
+
+      if (stored && stored in LOCALES) {
+        locale.value = stored;
+      } else {
+        locale.value = LOCALE_DEFAULT;
+      }
     }
 
     document.documentElement.lang = locale.value ?? LOCALE_DEFAULT;

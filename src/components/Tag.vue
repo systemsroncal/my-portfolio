@@ -97,6 +97,11 @@ const classes = computed(() => ["tag", `tag-variant-${props.variant}`]);
       color: white;
     }
 
+    &-laravel {
+      background-color: #ff2d20;
+      color: white;
+    }
+
     &-wordpress {
       background-color: #21759b;
       color: white;

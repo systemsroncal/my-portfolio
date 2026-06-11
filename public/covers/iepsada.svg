@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Sistema Colegio IEPSADA">
+  <rect width="1600" height="900" fill="#f4f6f9"/>
+  <rect width="300" height="900" fill="#343a40"/>
+  <rect x="0" y="0" width="300" height="72" fill="#2c3136"/>
+  <text x="36" y="48" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">AdminLTE</text>
+  <rect x="40" y="110" width="220" height="36" fill="#3c8dbc" rx="6"/>
+  <rect x="40" y="170" width="220" height="36" fill="#3d444b" rx="6"/>
+  <rect x="40" y="230" width="220" height="36" fill="#3d444b" rx="6"/>
+  <rect x="40" y="290" width="220" height="36" fill="#3d444b" rx="6"/>
+  <rect x="340" y="24" width="1220" height="64" fill="#ffffff" rx="8"/>
+  <text x="380" y="68" fill="#343a40" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">IEPSADA · Panel Escolar</text>
+  <rect x="360" y="120" width="280" height="140" fill="#17a2b8" rx="8"/>
+  <text x="390" y="170" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Estudiantes</text>
+  <text x="390" y="220" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="900">1,248</text>
+  <rect x="660" y="120" width="280" height="140" fill="#28a745" rx="8"/>
+  <text x="690" y="170" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Docentes</text>
+  <text x="690" y="220" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="900">86</text>
+  <rect x="960" y="120" width="280" height="140" fill="#ffc107" rx="8"/>
+  <text x="990" y="170" fill="#343a40" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Cursos</text>
+  <text x="990" y="220" fill="#343a40" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="900">42</text>
+  <rect x="1260" y="120" width="280" height="140" fill="#dc3545" rx="8"/>
+  <text x="1290" y="170" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Asistencia</text>
+  <text x="1290" y="220" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="900">94%</text>
+  <rect x="360" y="300" width="900" height="360" fill="#ffffff" rx="8" stroke="#dee2e6"/>
+  <text x="390" y="350" fill="#6c757d" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Gestión académica y reportes</text>
+  <polyline points="420,560 540,470 680,510 820,390 980,430 1120,320" fill="none" stroke="#3c8dbc" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="1280" y="300" width="260" height="360" fill="#ffffff" rx="8" stroke="#dee2e6"/>
+  <text x="1310" y="350" fill="#6c757d" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Alertas</text>
+</svg>

@@ -25,7 +25,16 @@ export const skillCategories: SkillCategory[] = [
   {
     id: "cms",
     name: { es: "CMS & E-commerce", en: "CMS & E-commerce" },
-    items: ["WordPress", "WooCommerce", "Shopify", "PrestaShop", "Ecwid", "Moodle"],
+    items: [
+      "WordPress",
+      "WooCommerce",
+      "Shopify",
+      "PrestaShop",
+      "Magento",
+      "Ecwid",
+      "Moodle",
+      "OpenCart",
+    ],
   },
   {
     id: "cloud",

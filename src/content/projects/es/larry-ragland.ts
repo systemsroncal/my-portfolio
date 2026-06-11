@@ -1,12 +1,12 @@
 import type { ProjectContent } from "../../types";
 
 export default {
-  title: "Larry Ragland Dashboard",
+  title: "Larry R. Dashboard",
   theme: "dark",
   tags: ["php", "wordpress", "javascript"],
   source: "https://github.com/systemsroncal/larry-ragland-dashboard",
   description:
-    "Plugin personalizado de WordPress que proporciona un dashboard administrativo para el sitio web de Larry Ragland.<br/><br/>Extiende WordPress con widgets personalizados, visualización de datos y herramientas de gestión de contenido.",
+    "Plugin personalizado de WordPress que proporciona un dashboard administrativo para el sitio web de Larry R.<br/><br/>Extiende WordPress con widgets personalizados, visualización de datos y herramientas de gestión de contenido.",
   components: [
     {
       type: "text",

@@ -15,6 +15,10 @@ import { useScroll } from "./composables/useScroll";
 import { projectVisible } from "./composables/useRouteObserver";
 import ProjectBackground from "./features/projects/components/ProjectBackground.vue";
 import { useClickSound } from "./features/sounds/composables/useClickSounds";
+import ContactConsoleModal from "./components/ContactConsoleModal.vue";
+import WhatsAppFloat from "./components/WhatsAppFloat.vue";
+import LegalPage from "./features/legal/components/LegalPage.vue";
+import { isLegalRoute, useLegalRouteSync } from "./composables/useLegalRoute";
 //import { useHoverSound } from "./features/sounds/composables/useHoverSounds";
 
 const { isTransitioning } = useProjectTransition();
@@ -25,6 +29,7 @@ useMusic();
 useHowler();
 useScroll();
 useRouteObserver();
+useLegalRouteSync();
 useClickSound();
 //useHoverSound();
 const { isTouch } = useAgent();
@@ -33,27 +38,33 @@ const { isTouch } = useAgent();
 <template>
   <Header />
 
-  <!-- main page -->
-  <div :class="{ 'home-wrapper-projectIsReady': projectVisible }">
-    <Home />
-  </div>
+  <LegalPage v-if="isLegalRoute" />
 
-  <!-- overlay page -->
-  <ProjectBackground />
-  <div
-    class="project-wrapper"
-    :class="{
-      'project-wrapper-visible': projectVisible,
-      'project-wrapper-transitioning': isTransitioning,
-    }"
-  >
-    <div class="project-content">
-      <Project />
+  <template v-else>
+    <!-- main page -->
+    <div :class="{ 'home-wrapper-projectIsReady': projectVisible }">
+      <Home />
     </div>
-  </div>
+
+    <!-- overlay page -->
+    <ProjectBackground />
+    <div
+      class="project-wrapper"
+      :class="{
+        'project-wrapper-visible': projectVisible,
+        'project-wrapper-transitioning': isTransitioning,
+      }"
+    >
+      <div class="project-content">
+        <Project />
+      </div>
+    </div>
+  </template>
 
   <Cursor v-if="!isTouch" />
   <MobileNav />
+  <ContactConsoleModal />
+  <WhatsAppFloat />
 </template>
 
 <style lang="scss">
@@ -80,7 +91,6 @@ const { isTouch } = useAgent();
 
 .project-content {
   width: 100%;
-  height: 100%;
-  overflow: hidden; /* ensure no scroll container */
+  min-height: 100%;
 }
 </style>

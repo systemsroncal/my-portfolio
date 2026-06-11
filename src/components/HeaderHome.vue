@@ -7,8 +7,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useHeaderTheme } from "../composables/useHeaderTheme";
 import { projectId } from "../composables/useRouteObserver";
 import { NAV_SECTIONS, type NavSection } from "../content/navigation";
+import { isLegalRoute } from "../composables/useLegalRoute";
+import { useRouter } from "../composables/useRouter";
+
+const router = useRouter();
 
 const handleLinkClick = (link: string) => {
+  if (isLegalRoute.value) {
+    router.push(`/${link}`);
+    return;
+  }
+
   if (!lenis.value) return;
   lenis.value.scrollTo(link);
 };

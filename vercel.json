@@ -1,4 +1,15 @@
 {
+  "redirects": [
+    { "source": "/legal.html", "destination": "/en/legal", "permanent": true },
+    { "source": "/privacy.html", "destination": "/en/privacy", "permanent": true },
+    { "source": "/es/legal.html", "destination": "/legal", "permanent": true },
+    { "source": "/es/privacy.html", "destination": "/privacy", "permanent": true },
+    { "source": "/es/legal", "destination": "/legal", "permanent": true },
+    { "source": "/es/privacy", "destination": "/privacy", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/((?!assets|chunks|fonts|covers|api|.*\\..*).*)", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",

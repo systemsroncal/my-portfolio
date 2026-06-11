@@ -14,6 +14,7 @@ export type TagVariant =
   | "ogl"
   | "glsl"
   | "php"
+  | "laravel"
   | "wordpress";
 
 export const tagLabels = {
@@ -32,5 +33,6 @@ export const tagLabels = {
   ogl: "OGL.js",
   glsl: "GLSL",
   php: "PHP",
+  laravel: "Laravel",
   wordpress: "WordPress",
 } as const satisfies Record<TagVariant, string>;

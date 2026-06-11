@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Social from "./Social.vue";
-import Link from "./Link.vue";
 import Clickable from "./Clickable.vue";
 import LangSwitch from "./LangSwitch.vue";
 import NotchSection from "./NotchSection.vue";
@@ -20,7 +19,6 @@ const handleBackToTop = () => {
 };
 
 const { withSocial = true } = defineProps<Props>();
-const showAttribution = import.meta.env.VITE_SHOW_ATTRIBUTION !== "false";
 </script>
 
 <template>
@@ -44,25 +42,23 @@ const showAttribution = import.meta.env.VITE_SHOW_ATTRIBUTION !== "false";
         <div class="footer-top-links">
           <div class="footer-top-links-legal">
             <Clickable renderAs="div">
-              <Link
-                :href="locale === 'es' ? '/es/privacy' : '/privacy'"
+              <a
+                :href="locale === 'es' ? '/privacy' : '/en/privacy'"
                 class="footer-link"
-                :external="true"
                 data-cursor="circle-white"
                 data-sound="click"
                 data-hoversound="hover"
-                >{{ t("privacy") }}</Link
+                >{{ t("privacy") }}</a
               >
             </Clickable>
             <Clickable renderAs="div">
-              <Link
-                :href="locale === 'es' ? '/es/legal' : '/legal'"
+              <a
+                :href="locale === 'es' ? '/legal' : '/en/legal'"
                 class="footer-link children-unclickable"
-                :external="true"
                 data-cursor="circle-white"
                 data-sound="click"
                 data-hoversound="hover"
-                >{{ t("legal") }}</Link
+                >{{ t("legal") }}</a
               >
             </Clickable>
           </div>
@@ -70,37 +66,16 @@ const showAttribution = import.meta.env.VITE_SHOW_ATTRIBUTION !== "false";
         </div>
       </div>
       <div class="footer-credits">
-        <div v-if="showAttribution" class="footer-credits-built">
-          <p>
-            {{ t("original-concept-by") }}
-          </p>
-          <Clickable renderAs="div">
-            <Link
-              href="https://david-hckh.com"
-              class="footer-link children-unclickable"
-              external
-              data-cursor="circle-white"
-              data-hoversound="hover"
-              >David Heckhoff</Link
-            >
-          </Clickable>
-        </div>
-        <div class="footer-credits-music">
-          <p>
-            {{ t("music-produced-by") }}
-          </p>
-          <Clickable renderAs="div">
-            <Link
-              href="https://soundcloud.com/hmsurf"
-              class="footer-link children-unclickable"
-              external
-              data-cursor="circle-white"
-              data-hoversound="hover"
-              >HM Surf</Link
-            >
-          </Clickable>
-        </div>
-        <p>© {{ new Date().getFullYear() }} Enrique Roncal</p>
+        <p class="footer-credits-copy">
+          © {{ new Date().getFullYear() }} Enrique Roncal ·
+          {{ t("footer-made-with-before") }}
+          <svg class="footer-heart" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+            />
+          </svg>
+          {{ t("footer-made-with-after") }}
+        </p>
       </div>
     </div>
   </footer>
@@ -187,13 +162,23 @@ const showAttribution = import.meta.env.VITE_SHOW_ATTRIBUTION !== "false";
     font-size: var(--font-size-sm);
     text-align: center;
 
-    &-built,
-    &-music {
+    &-copy {
       display: flex;
-      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
       align-items: center;
-      gap: var(--space-xxs);
+      gap: 0.35em;
+      opacity: 0.85;
+      line-height: 1.5;
     }
+  }
+
+  &-heart {
+    width: 0.95em;
+    height: 0.95em;
+    fill: #e53935;
+    flex-shrink: 0;
+    transform: translateY(0.05em);
   }
 
   &-notch {

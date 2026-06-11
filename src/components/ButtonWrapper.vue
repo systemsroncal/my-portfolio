@@ -17,7 +17,7 @@ const classes = computed(() => [
 </script>
 
 <template>
-  <component :is="props.renderAs ?? 'button'" :class="classes">
+  <component :is="props.renderAs ?? 'button'" :class="classes" v-bind="$attrs">
     <slot></slot>
   </component>
 </template>

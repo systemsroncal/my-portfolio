@@ -1,4 +1,4 @@
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 import { isTransitioning } from "./useProjectTransition";
 
 // -----------------------------------------------------------------------------
@@ -26,12 +26,17 @@ export const projectVisible = computed(() => {
 
 export const recentProject = ref<string | null>(null);
 
-export const recentProjectId = computed(() => {
-  if (projectId.value) {
-    recentProject.value = projectId.value;
-  }
-  return recentProject.value;
-});
+export const recentProjectId = computed(() => recentProject.value);
+
+watch(
+  projectId,
+  (id) => {
+    if (id) {
+      recentProject.value = id;
+    }
+  },
+  { immediate: true },
+);
 
 // -----------------------------------------------------------------------------
 // HISTORY PATCH (safe & minimal)

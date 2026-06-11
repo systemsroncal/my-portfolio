@@ -42,9 +42,15 @@ const isStickyVisible = computed(() => {
   return scrolledPastIntro.value || !projectsLoaded.value;
 });
 
+const getContactAnchor = () => {
+  if (!contactRef.value) return null;
+  return (contactRef.value.querySelector(".contact-hero") as HTMLElement | null) ?? contactRef.value;
+};
+
 const updateContactBottomOffset = () => {
-  if (!contactRef.value) return;
-  const bounding = contactRef.value.getBoundingClientRect();
+  const anchor = getContactAnchor();
+  if (!anchor) return;
+  const bounding = anchor.getBoundingClientRect();
   const documentBottom = document.documentElement.scrollHeight;
   const elementBottom = bounding.bottom + window.scrollY;
   // distance from bottom of document to bottom of contact section
@@ -165,7 +171,7 @@ watch(
       <SkillsSection id="skills" />
       <Projects id="projects" @loaded="handleProjectsLoaded" />
       <div ref="contactRef" class="home-contact">
-        <Contact id="contact" v-if="projectsLoaded" />
+        <Contact v-if="projectsLoaded" />
       </div>
       <Footer :withSocial="false"></Footer>
     </Layout>
@@ -224,8 +230,6 @@ watch(
 
   &-contact {
     width: 100%;
-    min-height: calc(var(--lvh) * 100);
-    max-height: calc(var(--lvh) * 100);
   }
 }
 

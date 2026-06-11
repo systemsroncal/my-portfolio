@@ -2,9 +2,22 @@
 import Button from "./Button.vue";
 import { locale } from "../i18n/store";
 import { changeLocale } from "../i18n/utils/locale";
+import { getLegalPath, legalRoute } from "../composables/useLegalRoute";
+import { useRouter } from "../composables/useRouter";
+
+import type { Locale } from "../i18n/types";
+
+const router = useRouter();
 
 const handleLangSwitch = () => {
-  changeLocale(locale.value === "es" ? "en" : "es");
+  const newLocale = (locale.value === "es" ? "en" : "es") as Locale;
+  const route = legalRoute.value;
+
+  if (route) {
+    router.push(getLegalPath(route.page, newLocale));
+  }
+
+  changeLocale(newLocale);
 };
 </script>
 

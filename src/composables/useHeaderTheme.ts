@@ -2,46 +2,67 @@ import { ref, watchEffect } from "vue";
 import { lenis } from "./useScroll";
 import { sizes } from "../utils/sizes";
 
-export const useHeaderTheme = ({
-  onUpdate,
-}: {
-  onUpdate?: (element: HTMLElement | null, boundingClientRect: DOMRect | null, hasScrolledIntoView: boolean) => void;
-} = {}) => {
-  let aboutElement: HTMLElement | null = null;
-  const isDarkTheme = ref(false);
-  const hasScrolledIntoView = ref(false);
+const getHeaderHeight = () => {
+  const value = getComputedStyle(document.documentElement).getPropertyValue("--height-header").trim();
+  return parseFloat(value) || 72;
+};
 
-  const handleScroll = () => {
-    if (!aboutElement) {
-      aboutElement = typeof window !== "undefined" ? document.querySelector("#about") : null;
-    }
+const isUnderHeader = (element: HTMLElement) => {
+  const rect = element.getBoundingClientRect();
+  return rect.top < getHeaderHeight() && rect.bottom > 0;
+};
 
-    if (aboutElement) {
-      const aboutBounding = aboutElement.getBoundingClientRect();
-      const isLandscape = sizes.isLandscape;
-      const isScrolledIntoView = aboutBounding.top - (isLandscape ? sizes.height * 0.225 : 0) < 0;
-      const isScrolledPast = aboutBounding.bottom - 36 < 0;
+const isDarkTheme = ref(false);
+const hasScrolledIntoView = ref(false);
+let listenerInitialized = false;
 
-      hasScrolledIntoView.value = isScrolledIntoView;
-      isDarkTheme.value = isScrolledIntoView && !isScrolledPast;
+const handleScroll = () => {
+  const aboutElement =
+    typeof window !== "undefined" ? (document.querySelector("#about") as HTMLElement | null) : null;
+  const educationElement =
+    typeof window !== "undefined" ? (document.querySelector("#education") as HTMLElement | null) : null;
 
-      if (typeof onUpdate === "function") {
-        onUpdate(aboutElement, aboutBounding, isScrolledIntoView);
-      }
-    }
-  };
+  let aboutDark = false;
+  let isScrolledIntoViewNext = false;
+
+  if (aboutElement) {
+    const aboutBounding = aboutElement.getBoundingClientRect();
+    const isLandscape = sizes.isLandscape;
+    isScrolledIntoViewNext = aboutBounding.top - (isLandscape ? sizes.height * 0.225 : 0) < 0;
+    const isScrolledPast = aboutBounding.bottom - 36 < 0;
+    aboutDark = isScrolledIntoViewNext && !isScrolledPast;
+  }
+
+  const educationDark = educationElement ? isUnderHeader(educationElement) : false;
+  const nextDarkTheme = aboutDark || educationDark;
+
+  if (hasScrolledIntoView.value !== isScrolledIntoViewNext) {
+    hasScrolledIntoView.value = isScrolledIntoViewNext;
+  }
+
+  if (isDarkTheme.value !== nextDarkTheme) {
+    isDarkTheme.value = nextDarkTheme;
+  }
+};
+
+const initScrollListener = () => {
+  if (listenerInitialized || typeof window === "undefined") return;
+  listenerInitialized = true;
 
   watchEffect((onInvalidate) => {
-    if (lenis.value) {
-      lenis.value.on("scroll", handleScroll);
-    }
+    if (!lenis.value) return;
+
+    lenis.value.on("scroll", handleScroll);
+    handleScroll();
 
     onInvalidate(() => {
-      if (lenis.value) {
-        lenis.value.off("scroll", handleScroll);
-      }
+      lenis.value?.off("scroll", handleScroll);
     });
   });
+};
+
+export const useHeaderTheme = () => {
+  initScrollListener();
 
   return {
     isDarkTheme,

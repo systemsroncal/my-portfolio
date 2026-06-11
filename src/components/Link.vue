@@ -25,9 +25,18 @@ const resolvedTo = computed(() => {
   return path;
 });
 
+const isStaticDocument = computed(() => /\.html(?:$|[?#])/i.test(resolvedTo.value));
+
 const handleClick = (event: MouseEvent) => {
-  // Don't interfere with external links or if modifier keys are pressed
-  if (props.external || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+  // Don't interfere with external links, static HTML pages, or modifier keys
+  if (
+    props.external ||
+    isStaticDocument.value ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
     return;
   }
 

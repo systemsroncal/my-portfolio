@@ -4,6 +4,7 @@ import Linkedin from "./icons/Linkedin.vue";
 import Instagram from "./icons/Instagram.vue";
 import Mail from "./icons/Mail.vue";
 import Facebook from "./icons/Facebook.vue";
+import Whatsapp from "./icons/Whatsapp.vue";
 import Link from "./Link.vue";
 import { t } from "../i18n/utils/translate";
 import ButtonRound from "./ButtonRound.vue";
@@ -17,6 +18,7 @@ const props = defineProps<{
 // map icon names to components
 const icons = {
   mail: Mail,
+  whatsapp: Whatsapp,
   github: Github,
   linkedin: Linkedin,
   facebook: Facebook,

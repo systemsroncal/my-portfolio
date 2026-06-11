@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Larry R. Dashboard">
+  <defs>
+    <linearGradient id="wp-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0f0f1"/>
+      <stop offset="100%" stop-color="#dcdcde"/>
+    </linearGradient>
+  </defs>
+
+  <g opacity="0.38">
+    <rect width="1600" height="900" fill="url(#wp-bg)"/>
+    <rect width="260" height="900" fill="#1d2327"/>
+    <rect x="0" y="0" width="260" height="56" fill="#101517"/>
+    <rect x="300" y="24" width="1260" height="56" fill="#ffffff" rx="4"/>
+    <rect x="300" y="110" width="1260" height="760" fill="#ffffff" rx="4"/>
+    <rect x="340" y="150" width="1180" height="56" fill="#f6f7f7" rx="4"/>
+    <rect x="340" y="230" width="360" height="220" fill="#f6f7f7" rx="4"/>
+    <rect x="720" y="230" width="360" height="220" fill="#f6f7f7" rx="4"/>
+    <rect x="1100" y="230" width="420" height="220" fill="#f6f7f7" rx="4"/>
+    <rect x="340" y="480" width="1180" height="340" fill="#f6f7f7" rx="4"/>
+    <text x="40" y="120" fill="#f0f0f1" font-family="Arial, Helvetica, sans-serif" font-size="18">Dashboard</text>
+    <text x="40" y="170" fill="#c3c4c7" font-family="Arial, Helvetica, sans-serif" font-size="18">Entradas</text>
+    <text x="40" y="220" fill="#c3c4c7" font-family="Arial, Helvetica, sans-serif" font-size="18">Medios</text>
+    <text x="40" y="270" fill="#c3c4c7" font-family="Arial, Helvetica, sans-serif" font-size="18">Pùginas</text>
+    <text x="340" y="190" fill="#50575e" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">Escritorio</text>
+  </g>
+
+  <rect width="1600" height="900" fill="none"/>
+  <image href="logos/wordpress.svg" x="560" y="330" width="480" height="120" preserveAspectRatio="xMidYMid meet"/>
+</svg>

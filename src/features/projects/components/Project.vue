@@ -9,28 +9,39 @@ import { locale } from "../../../i18n/store";
 import { lenis } from "../../../composables/useScroll";
 
 import type { Locale } from "../../../i18n/types";
+import type { ProjectContent as ProjectContentData } from "../../../content/types";
 
 const loading = ref(true);
-const content = ref(null);
+const content = ref<ProjectContentData | null>(null);
 const error = ref<Error | null>(null);
 
-const fetchProject = async (project: string | undefined) => {
+const fetchProject = (project: string | undefined) => {
+  if (!project || !locale.value) return;
+
+  loading.value = true;
+  error.value = null;
+
   try {
-    const module = await projectModules[locale.value as Locale][project as string].default;
-    content.value = module;
-    loading.value = false;
+    const projectModule = projectModules[locale.value as Locale][project];
+
+    if (!projectModule?.default) {
+      throw new Error(`Project module not found: ${project}`);
+    }
+
+    content.value = projectModule.default;
   } catch (err) {
-    error.value = new Error(`Failed to fetch project ${project}`);
+    content.value = null;
+    error.value = err instanceof Error ? err : new Error(`Failed to fetch project ${project}`);
   } finally {
     loading.value = false;
   }
 };
 
 watch(
-  [recentProjectId, locale],
-  () => {
-    if (recentProjectId.value) {
-      fetchProject(recentProjectId.value);
+  [projectId, locale],
+  ([id]) => {
+    if (id) {
+      fetchProject(id);
     }
   },
   { immediate: true },
@@ -58,7 +69,7 @@ watch(
   >
     <div :class="['project-content-wrapper', projectVisible && `project-content-wrapper-visible`]">
       <ProjectContent
-        v-if="content && recentProjectId && projectVisible"
+        v-if="content && recentProjectId"
         :content="content"
         :projectId="recentProjectId"
       />

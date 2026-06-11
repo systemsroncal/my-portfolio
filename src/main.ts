@@ -13,30 +13,50 @@ declare global {
   }
 }
 
-window.__appBooted = true;
+const legacyHtmlRedirects: Record<string, string> = {
+  "/legal.html": "/en/legal",
+  "/privacy.html": "/en/privacy",
+  "/es/legal.html": "/legal",
+  "/es/privacy.html": "/privacy",
+  "/es/legal": "/legal",
+  "/es/privacy": "/privacy",
+};
 
-gsap.registerPlugin(ScrollTrigger);
+const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+const legacyRedirect = legacyHtmlRedirects[currentPath];
 
-const { hide, setPreloaderProgress, showPreloaderError } = initPreloaderBootstrap(() => {
-  preloaderVisible.value = false;
-});
-
-if (resources.isReady) {
-  setPreloaderProgress(1);
-  window.setTimeout(hide, 200);
+if (legacyRedirect) {
+  window.location.replace(legacyRedirect);
 } else {
-  resources.on("progress", (progress) => {
-    setPreloaderProgress(0.25 + progress * 0.75);
-  });
-
-  resources.once("ready", () => {
-    setPreloaderProgress(1);
-    window.setTimeout(hide, 200);
-  });
-
-  resources.on("error", ({ name, message }) => {
-    showPreloaderError(`Error cargando ${name}: ${message}`);
-  });
+  bootApp();
 }
 
-createApp(App).mount("#app");
+function bootApp() {
+  window.__appBooted = true;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const { hide, setPreloaderProgress, showPreloaderError } = initPreloaderBootstrap(() => {
+    preloaderVisible.value = false;
+  });
+
+  if (resources.isReady) {
+    setPreloaderProgress(1);
+    window.setTimeout(hide, 200);
+  } else {
+    resources.on("progress", (progress) => {
+      setPreloaderProgress(0.25 + progress * 0.75);
+    });
+
+    resources.once("ready", () => {
+      setPreloaderProgress(1);
+      window.setTimeout(hide, 200);
+    });
+
+    resources.on("error", ({ name, message }) => {
+      showPreloaderError(`Error cargando ${name}: ${message}`);
+    });
+  }
+
+  createApp(App).mount("#app");
+}

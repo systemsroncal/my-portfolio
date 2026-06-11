@@ -7,16 +7,16 @@ import { projectId, recentProjectId } from "../../../composables/useRouteObserve
   <div
     :class="[
       'project-background-blend',
-      typeof recentProjectId === 'string' && `project-${recentProjectId}`,
+      recentProjectId && `project-${recentProjectId}`,
       isTransitioning && `project-background-blend-transitioning`,
-      typeof projectId === 'string' && `project-background-blend-visible`,
+      projectId && `project-background-blend-visible`,
     ]"
   ></div>
   <div
     :class="[
       'project-background',
-      typeof recentProjectId === 'string' && `project-${recentProjectId}`,
-      typeof projectId === 'string' && `project-background-visible`,
+      recentProjectId && `project-${recentProjectId}`,
+      projectId && `project-background-visible`,
       isTransitioning && `project-background-transitioning`,
     ]"
   ></div>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { experienceEntries } from "../../../content/experience";
+import { experienceAreas } from "../../../content/experience";
 import { locale } from "../../../i18n/store";
 import { t } from "../../../i18n/utils/translate";
 import NotchSection from "../../../components/NotchSection.vue";
@@ -11,17 +11,14 @@ import type { Locale } from "../../../i18n/types";
 
 const sectionRef = ref<HTMLElement | null>(null);
 
-useSectionReveal(sectionRef, ".experience-card", { stagger: 0.15, y: 56 });
+useSectionReveal(sectionRef, ".experience-card", { stagger: 0.1, y: 40 });
 
-const entries = computed(() => {
+const areas = computed(() => {
   const currentLocale = (locale.value ?? "es") as Locale;
-  return experienceEntries.map((entry) => ({
-    id: entry.id,
-    role: entry.role[currentLocale],
-    company: entry.company,
-    period: entry.period[currentLocale],
-    type: entry.type[currentLocale],
-    highlights: entry.highlights[currentLocale],
+  return experienceAreas.map((area) => ({
+    id: area.id,
+    name: area.name[currentLocale],
+    highlights: area.highlights[currentLocale],
   }));
 });
 </script>
@@ -32,19 +29,13 @@ const entries = computed(() => {
     <NotchSection class="experience-notch-end" />
     <div class="grid">
       <SectionHeader :banner="t('experience-banner')" :title="t('experience')" />
+      <p class="experience-intro">{{ t("experience-intro") }}</p>
     </div>
     <div class="grid experience-list">
-      <article v-for="entry in entries" :key="entry.id" class="experience-card">
-        <div class="experience-card-header">
-          <div class="experience-card-meta">
-            <span class="experience-card-period">{{ entry.period }}</span>
-            <span class="experience-card-type">{{ entry.type }}</span>
-          </div>
-          <h3 class="experience-card-role">{{ entry.role }}</h3>
-          <p class="experience-card-company">{{ entry.company }}</p>
-        </div>
+      <article v-for="area in areas" :key="area.id" class="experience-card">
+        <h3 class="experience-card-title">{{ area.name }}</h3>
         <ul class="experience-card-highlights">
-          <li v-for="(item, index) in entry.highlights" :key="index">{{ item }}</li>
+          <li v-for="(item, index) in area.highlights" :key="index">{{ item }}</li>
         </ul>
       </article>
     </div>
@@ -67,8 +58,19 @@ const entries = computed(() => {
     gap: var(--space-xxl);
   }
 
+  &-intro {
+    grid-column: 1 / 13;
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-copy);
+    max-width: 640px;
+
+    @include mixins.mq("lg") {
+      grid-column: 2 / 9;
+    }
+  }
+
   &-list {
-    gap: var(--space-lg);
+    gap: var(--space-md);
   }
 
   &-card {
@@ -83,66 +85,30 @@ const entries = computed(() => {
     );
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    gap: var(--space-sm);
     transition: transform 0.3s var(--ease-smooth);
 
-    @include mixins.mq("md") {
-      grid-column: 2 / 12;
-      padding: var(--space-lg);
+    @include mixins.mq("sm") {
+      grid-column: span 6;
     }
 
-    @include mixins.mq("lg") {
-      grid-column: 3 / 11;
+    @include mixins.mq("md") {
+      grid-column: span 4;
+      padding: var(--space-lg);
     }
 
     &:hover {
       transform: translateY(-4px);
     }
 
-    &-header {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-    }
-
-    &-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-      align-items: center;
-    }
-
-    &-period {
-      font-size: var(--font-size-sm);
-      font-weight: 700;
-      color: var(--color-cyan-500);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    &-type {
-      font-size: var(--font-size-xs);
-      font-weight: 700;
-      padding: 2px var(--space-xs);
-      border-radius: var(--radius-sm);
-      background-color: var(--color-orange-400);
-      color: var(--color-white-400);
-    }
-
-    &-role {
-      font-size: var(--font-size-title-xs);
+    &-title {
+      font-size: var(--font-size-title-xxs);
       font-weight: 900;
       letter-spacing: 0.02em;
 
       @include mixins.mq("md") {
-        font-size: var(--font-size-title-sm);
+        font-size: var(--font-size-title-xs);
       }
-    }
-
-    &-company {
-      font-size: var(--font-size-md);
-      font-weight: 700;
-      opacity: 0.85;
     }
 
     &-highlights {
@@ -150,8 +116,12 @@ const entries = computed(() => {
       flex-direction: column;
       gap: var(--space-xs);
       padding-left: 1.1rem;
-      font-size: var(--font-size-md);
+      font-size: var(--font-size-sm);
       line-height: var(--line-height-copy);
+
+      @include mixins.mq("md") {
+        font-size: var(--font-size-md);
+      }
 
       li {
         list-style: disc;

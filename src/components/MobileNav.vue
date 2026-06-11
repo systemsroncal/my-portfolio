@@ -7,16 +7,30 @@ import { lenis } from "../composables/useScroll";
 import { mobileNavOpen, closeMobileNav } from "../composables/useMobileNav";
 import { projectId } from "../composables/useRouteObserver";
 import LangSwitch from "./LangSwitch.vue";
-import { social } from "../content/social";
-import Link from "./Link.vue";
+import { openContactMenu } from "../composables/useContactMenu";
+import { isLegalRoute } from "../composables/useLegalRoute";
+import { useRouter } from "../composables/useRouter";
+
+const router = useRouter();
 
 const overlayRef = ref<HTMLElement | null>(null);
 const linksRef = ref<HTMLElement | null>(null);
 
 const handleNavClick = (section: string) => {
+  closeMobileNav();
+
+  if (isLegalRoute.value) {
+    router.push(`/#${section}`);
+    return;
+  }
+
   if (!lenis.value) return;
   lenis.value.scrollTo(`#${section}`);
+};
+
+const handleContactClick = () => {
   closeMobileNav();
+  openContactMenu();
 };
 
 watch(mobileNavOpen, (isOpen) => {
@@ -85,14 +99,14 @@ onUnmounted(() => {
         </nav>
         <div class="mobile-nav-footer">
           <LangSwitch />
-          <Link
-            :href="social.find((item) => item.name === 'mail')?.url ?? ''"
-            external
+          <button
+            type="button"
             class="mobile-nav-mail"
             data-sound="click"
+            @click="handleContactClick"
           >
             {{ t("get-in-touch") }}
-          </Link>
+          </button>
         </div>
       </div>
     </div>
@@ -210,6 +224,10 @@ onUnmounted(() => {
   }
 
   &-mail {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
     font-weight: 700;
     font-size: var(--font-size-md);
     color: var(--color-cyan-400);
