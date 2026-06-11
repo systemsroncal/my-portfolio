@@ -3,7 +3,7 @@ import type { ProjectContent } from "../../types";
 export default {
   title: "IEPSADA School System",
   theme: "dark",
-  tags: ["laravel", "php", "javascript", "html", "css"],
+  tags: ["php", "javascript", "html", "css"],
   source: "https://github.com/systemsroncal/sistema-colegio-iepsada",
   description:
     "Comprehensive school management system developed for IEPSADA institution.<br/><br/>Handles academic records, user roles, and administrative workflows with a PHP backend and responsive web interface.",

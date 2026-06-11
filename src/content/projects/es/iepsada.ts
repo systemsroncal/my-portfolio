@@ -3,7 +3,7 @@ import type { ProjectContent } from "../../types";
 export default {
   title: "Sistema Colegio IEPSADA",
   theme: "dark",
-  tags: ["laravel", "php", "javascript", "html", "css"],
+  tags: ["php", "javascript", "html", "css"],
   source: "https://github.com/systemsroncal/sistema-colegio-iepsada",
   description:
     "Sistema integral de gestión escolar desarrollado para la institución IEPSADA.<br/><br/>Administra registros académicos, roles de usuario y flujos administrativos con backend PHP e interfaz web responsive.",

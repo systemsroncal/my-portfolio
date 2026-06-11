@@ -3,7 +3,7 @@ import type { ProjectContent } from "../../types";
 export default {
   title: "Enrollment System",
   theme: "light",
-  tags: ["php", "javascript", "html", "css"],
+  tags: ["laravel", "php", "javascript", "html", "css"],
   source: "https://github.com/systemsroncal/sistema-matricula",
   description:
     "Student enrollment and registration system for educational institutions.<br/><br/>Automates the matriculation process with form validation, data persistence, and an intuitive workflow for administrators.",
