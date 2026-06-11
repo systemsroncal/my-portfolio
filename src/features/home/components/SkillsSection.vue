@@ -6,12 +6,14 @@ import { t } from "../../../i18n/utils/translate";
 import NotchSection from "../../../components/NotchSection.vue";
 import SectionHeader from "./SectionHeader.vue";
 import { useSectionReveal } from "../../../composables/useSectionReveal";
+import { useSkillTagsMotion } from "../../../composables/useSkillTagsMotion";
 
 import type { Locale } from "../../../i18n/types";
 
 const sectionRef = ref<HTMLElement | null>(null);
 
 useSectionReveal(sectionRef, ".skills-card", { stagger: 0.08, y: 36 });
+useSkillTagsMotion(sectionRef);
 
 const categories = computed(() => {
   const currentLocale = (locale.value ?? "es") as Locale;
@@ -34,7 +36,14 @@ const categories = computed(() => {
       <div v-for="category in categories" :key="category.id" class="skills-card">
         <h3 class="skills-card-title">{{ category.name }}</h3>
         <ul class="skills-card-list">
-          <li v-for="item in category.items" :key="item" class="skills-card-tag">{{ item }}</li>
+          <li
+            v-for="(item, index) in category.items"
+            :key="item"
+            class="skills-card-tag"
+            :style="{ '--tag-index': index }"
+          >
+            {{ item }}
+          </li>
         </ul>
       </div>
     </div>
@@ -120,6 +129,24 @@ const categories = computed(() => {
       border-radius: 100px;
       background-color: var(--color-beige-400);
       border: var(--stroke-sm) solid var(--color-grayscale-400);
+      will-change: transform, opacity;
+      transition:
+        border-color 0.25s ease,
+        background-color 0.25s ease,
+        box-shadow 0.25s ease;
+
+      @include mixins.hover {
+        border-color: var(--color-cyan-400);
+        background-color: var(--color-beige-500);
+        box-shadow: 0 4px 14px rgba(9, 20, 52, 0.08);
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skills-card-tag {
+      opacity: 1;
+      transform: none;
     }
   }
 

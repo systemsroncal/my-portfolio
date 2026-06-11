@@ -32,30 +32,38 @@ onUnmounted(() => {
   width: 100%;
   max-width: calc(var(--svw) * 100);
   overflow: hidden;
-  min-height: calc(var(--lvh) * 100);
-  padding: var(--space-outer);
-  padding-top: var(--space-lg);
+  min-height: min(100%, calc(var(--lvh) * 100));
+  padding: var(--space-lg) var(--space-outer) calc(var(--space-xxl) + env(safe-area-inset-bottom, 0px));
+
+  @include mixins.mq("sm") {
+    min-height: calc(var(--lvh) * 100);
+    padding-top: var(--space-xl);
+  }
 
   @include mixins.mq("md") {
     padding-top: var(--space-xxl);
+    padding-bottom: var(--space-xxxl);
   }
 
   &-content {
     position: relative;
-    padding-top: var(--space-md);
-    grid-column: 1 / 13;
+    padding-top: var(--space-sm);
+    grid-column: 1 / -1;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
+    max-width: 100%;
 
     @include mixins.mq("sm") {
       grid-column: 1 / 8;
+      padding-top: var(--space-md);
     }
 
     @include mixins.mq("md") {
       gap: var(--space-xl);
       grid-column: 1 / 6;
       padding-top: var(--space-lg);
+      max-width: 520px;
     }
 
     @include mixins.mq("lg") {
@@ -65,11 +73,25 @@ onUnmounted(() => {
 
   &-title {
     font-weight: 900;
-    letter-spacing: 0.02em;
-    font-size: var(--font-size-title-md);
+    letter-spacing: 0.01em;
+    line-height: 0.95;
+    font-size: clamp(2rem, 10vw, var(--font-size-title-md));
+    max-width: 12ch;
+    text-wrap: balance;
+
+    :deep(br) {
+      display: block;
+      content: "";
+    }
 
     @include mixins.mq("sm") {
-      font-size: var(--font-size-title-lg);
+      font-size: clamp(2.75rem, 8vw, var(--font-size-title-lg));
+      max-width: 14ch;
+    }
+
+    @include mixins.mq("md") {
+      letter-spacing: 0.02em;
+      max-width: none;
     }
 
     @include mixins.mq("xl") {
@@ -80,8 +102,21 @@ onUnmounted(() => {
   &-subtitle {
     font-size: var(--font-size-md);
     line-height: var(--line-height-copy);
-    max-width: 420px;
+    max-width: 36ch;
     opacity: 0.85;
+
+    @include mixins.mq("sm") {
+      max-width: 420px;
+    }
+  }
+
+  :deep(.social) {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+
+    @include mixins.mq("sm") {
+      gap: var(--space-md);
+    }
   }
 }
 </style>
