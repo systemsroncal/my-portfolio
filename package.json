@@ -18,6 +18,7 @@
     "vue": "^3.5.22"
   },
   "devDependencies": {
+    "@netlify/functions": "^5.3.0",
     "@types/howler": "^2.2.12",
     "@types/node": "^24.6.0",
     "@types/nodemailer": "^8.0.1",

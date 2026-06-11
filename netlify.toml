@@ -1,0 +1,44 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/contact"
+  to = "/.netlify/functions/contact"
+  status = 200
+
+[[redirects]]
+  from = "/legal.html"
+  to = "/en/legal"
+  status = 301
+
+[[redirects]]
+  from = "/privacy.html"
+  to = "/en/privacy"
+  status = 301
+
+[[redirects]]
+  from = "/es/legal.html"
+  to = "/legal"
+  status = 301
+
+[[redirects]]
+  from = "/es/privacy.html"
+  to = "/privacy"
+  status = 301
+
+[[redirects]]
+  from = "/es/legal"
+  to = "/legal"
+  status = 301
+
+[[redirects]]
+  from = "/es/privacy"
+  to = "/privacy"
+  status = 301
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

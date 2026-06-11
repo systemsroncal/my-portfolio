@@ -1,8 +1,9 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import glsl from "vite-plugin-glsl";
+import { contactApiDevPlugin } from "./vite-plugin-contact-api";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     vue(),
     glsl({
@@ -10,6 +11,7 @@ export default defineConfig({
       defaultExtension: "glsl",
       warnDuplicatedImports: false,
     }),
+    contactApiDevPlugin(mode),
   ],
   server: {
     port: 3000,
@@ -41,4 +43,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));
