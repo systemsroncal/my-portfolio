@@ -52,6 +52,18 @@
     transition: width 0.25s ease-out;
   }
 
+  &-status {
+    margin-top: var(--space-sm);
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+    color: var(--color-text-300);
+    word-break: break-word;
+
+    &-error {
+      color: #b42318;
+    }
+  }
+
   &-hidden {
     opacity: 0;
     pointer-events: none !important;

@@ -54,8 +54,28 @@
         <div class="preloader-track">
           <div class="preloader-bar"></div>
         </div>
+        <p class="preloader-status" hidden></p>
       </div>
     </div>
+    <script>
+      (function () {
+        var status = document.querySelector(".preloader-status");
+        function show(msg) {
+          if (!status) return;
+          status.hidden = false;
+          status.textContent = msg;
+          status.classList.add("preloader-status-error");
+        }
+        window.addEventListener("error", function (e) {
+          show("Error: " + (e.message || "fallo al cargar la app"));
+        });
+        window.addEventListener("unhandledrejection", function (e) {
+          var reason = e.reason;
+          var msg = reason && reason.message ? reason.message : String(reason || "promesa rechazada");
+          show("Error: " + msg);
+        });
+      })();
+    </script>
     <script type="module" src="./src/main.ts"></script>
   </body>
 </html>

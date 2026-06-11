@@ -14,11 +14,14 @@ type ResourceType = Texture | GLTF;
 class Resources extends EventEmitter<{
   ready: void;
   progress: number;
+  error: { name: string; message: string };
 }> {
   toLoad = sources.length;
   isReady = false;
   loaded = 0;
+  failed = 0;
   items: Record<string, any> = {};
+  errors: { name: string; message: string }[] = [];
 
   loaders: {
     gltfLoader: GLTFLoader;
@@ -36,34 +39,66 @@ class Resources extends EventEmitter<{
     };
   }
 
+  get progress() {
+    return this.loaded / this.toLoad;
+  }
+
   startLoading() {
-    if (this.isReady) return;
+    if (this.isReady || this.loaded > 0) return;
 
     for (const source of sources) {
       if (source.type === "gltfModel") {
-        this.loaders.gltfLoader.load(source.path, (file) => {
-          this.sourceLoaded(source, file);
-        });
+        this.loaders.gltfLoader.load(
+          source.path,
+          (file) => {
+            this.sourceLoaded(source, file);
+          },
+          undefined,
+          (error) => {
+            this.sourceFailed(source, error);
+          },
+        );
       } else if (source.type === "texture") {
-        this.loaders.textureLoader.load(source.path, (file: Texture) => {
-          file.colorSpace = SRGBColorSpace;
-          this.sourceLoaded(source, file);
-        });
+        this.loaders.textureLoader.load(
+          source.path,
+          (file: Texture) => {
+            file.colorSpace = SRGBColorSpace;
+            this.sourceLoaded(source, file);
+          },
+          undefined,
+          (error) => {
+            this.sourceFailed(source, error);
+          },
+        );
       }
     }
   }
 
   sourceLoaded(source: { name: string; type: string; path: string }, file: ResourceType) {
     this.items[source.name] = file;
-
     this.loaded++;
+    this.emitProgress();
+  }
 
-    this.emit("progress", this.loaded / this.toLoad);
+  sourceFailed(source: { name: string; type: string; path: string }, error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    const entry = { name: source.name, message };
+    this.errors.push(entry);
+    this.failed++;
+    this.loaded++;
+    console.error(`[Resources] Failed to load "${source.name}"`, error);
+    this.emit("error", entry);
+    this.emitProgress();
+  }
+
+  emitProgress() {
+    const progress = this.loaded / this.toLoad;
+    this.emit("progress", progress);
 
     if (this.loaded === this.toLoad) {
       this.isReady = true;
       this.emit("ready");
-      this.log("All resources loaded");
+      this.log(this.failed > 0 ? `Loaded with ${this.failed} error(s)` : "All resources loaded");
     }
   }
 
