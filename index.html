@@ -59,21 +59,47 @@
     </div>
     <script>
       (function () {
+        var bar = document.querySelector(".preloader-bar");
         var status = document.querySelector(".preloader-status");
+
+        if (bar) bar.style.width = "25%";
+
         function show(msg) {
           if (!status) return;
           status.hidden = false;
           status.textContent = msg;
           status.classList.add("preloader-status-error");
         }
+
+        function forceHide() {
+          document.body.classList.remove("is-loading");
+          var preloader = document.querySelector(".preloader");
+          if (preloader) preloader.classList.add("preloader-hidden");
+        }
+
         window.addEventListener("error", function (e) {
           show("Error: " + (e.message || "fallo al cargar la app"));
         });
+
         window.addEventListener("unhandledrejection", function (e) {
           var reason = e.reason;
           var msg = reason && reason.message ? reason.message : String(reason || "promesa rechazada");
           show("Error: " + msg);
         });
+
+        window.setTimeout(function () {
+          if (!window.__appBooted) {
+            show("JavaScript no cargó. Abre F12 → Consola, o desactiva Deployment Protection en Vercel.");
+            forceHide();
+          }
+        }, 12000);
+
+        window.setTimeout(function () {
+          if (document.body.classList.contains("is-loading")) {
+            show("Tiempo agotado — mostrando sitio");
+            forceHide();
+          }
+        }, 18000);
       })();
     </script>
     <script type="module" src="./src/main.ts"></script>
