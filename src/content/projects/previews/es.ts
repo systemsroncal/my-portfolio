@@ -4,6 +4,12 @@ import type { ProjectPreview } from "../../types";
 
 export default [
   {
+    title: "Rediseño web — Colortex",
+    slug: "colortex",
+    thumbnail: projectCovers.colortex,
+    description: "WordPress, Figma, SEO y WPO para líder textil",
+  },
+  {
     title: "CRM SaaS AWS",
     slug: "aws-crm",
     thumbnail: projectCovers["aws-crm"],

@@ -1,4 +1,5 @@
 export const projectCovers = {
+  colortex: "/covers/Colortex-clean.jpg",
   "aws-crm": "/covers/AWS-IA-clean.png",
   ecommerce: "/covers/Ecommerce-clean.png",
   iepsada: "/covers/IPSADA-V2-clean.png",

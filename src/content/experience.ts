@@ -88,6 +88,22 @@ export const experienceAreas: ExperienceArea[] = [
     },
   },
   {
+    id: "ai-dev",
+    name: { es: "IA aplicada al desarrollo", en: "AI-assisted development" },
+    highlights: {
+      es: [
+        "Flujos con agentes de IA para implementación, refactors, pruebas y documentación técnica.",
+        "Cursor IDE, Cursor CLI, Google Antigravity, OpenCode y Copilot integrados al ciclo de entrega.",
+        "Criterio humano sobre el código generado: seguridad, rendimiento, mantenibilidad y estándares del proyecto.",
+      ],
+      en: [
+        "AI agent workflows for implementation, refactors, testing, and technical documentation.",
+        "Cursor IDE, Cursor CLI, Google Antigravity, OpenCode, and Copilot woven into the delivery cycle.",
+        "Human oversight on generated code: security, performance, maintainability, and project standards.",
+      ],
+    },
+  },
+  {
     id: "security",
     name: { es: "Ciberseguridad & soporte", en: "Cybersecurity & support" },
     highlights: {
