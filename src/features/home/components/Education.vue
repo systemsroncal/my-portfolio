@@ -48,14 +48,17 @@ const slides = computed(() => {
   });
 });
 
-const slideCount = computed(() => slides.value.length);
+/** Primer slot vacío para que el ítem 1 quede visible al entrar en la sección */
+const contentSlideCount = computed(() => slides.value.length);
+const trackSlideCount = computed(() => contentSlideCount.value + 1);
+const activeContentIndex = computed(() => Math.max(0, activeIndex.value - 1));
 
 const { refresh } = useEducationHorizontalScroll({
   sectionRef,
   pinRef,
   trackRef,
   viewportRef,
-  slideCount,
+  slideCount: trackSlideCount,
   activeIndex,
   enabled: motionEnabled,
 });
@@ -83,11 +86,12 @@ watch(locale, () => {
 
       <div class="education-viewport" ref="viewportRef">
         <div class="education-track" ref="trackRef" role="list">
+          <div class="education-slide education-slide--lead" aria-hidden="true"></div>
           <article
             v-for="(slide, index) in slides"
             :key="slide.id"
             class="education-slide"
-            :class="{ 'education-slide--active': activeIndex === index }"
+            :class="{ 'education-slide--active': activeIndex === index + 1 }"
             role="listitem"
           >
             <div class="education-slide-card">
@@ -106,12 +110,14 @@ watch(locale, () => {
         </div>
       </div>
 
-      <div v-if="motionEnabled && slideCount > 1" class="education-progress" aria-hidden="true">
+      <div v-if="motionEnabled && contentSlideCount > 1" class="education-progress" aria-hidden="true">
         <div class="education-progress-track">
           <div
             class="education-progress-fill"
             :style="{
-              width: `${slideCount > 1 ? (activeIndex / (slideCount - 1)) * 100 : 100}%`,
+              width: `${
+                contentSlideCount > 1 ? (activeContentIndex / (contentSlideCount - 1)) * 100 : 100
+              }%`,
             }"
           />
         </div>
@@ -120,11 +126,11 @@ watch(locale, () => {
             v-for="(_, index) in slides"
             :key="index"
             class="education-dot"
-            :class="{ 'education-dot--active': activeIndex === index }"
+            :class="{ 'education-dot--active': activeContentIndex === index }"
           />
         </div>
         <span class="education-counter">
-          {{ activeIndex + 1 }} / {{ slideCount }}
+          {{ activeContentIndex + 1 }} / {{ contentSlideCount }}
         </span>
       </div>
     </div>
@@ -259,6 +265,12 @@ watch(locale, () => {
       @supports (width: 100cqw) {
         flex: 0 0 calc((100cqw - 2 * var(--space-outer) - var(--space-md)) / 2);
       }
+    }
+
+    &--lead {
+      flex-shrink: 0;
+      pointer-events: none;
+      visibility: hidden;
     }
   }
 
