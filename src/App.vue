@@ -19,6 +19,7 @@ import ContactConsoleModal from "./components/ContactConsoleModal.vue";
 import WhatsAppFloat from "./components/WhatsAppFloat.vue";
 import LegalPage from "./features/legal/components/LegalPage.vue";
 import { isLegalRoute, useLegalRouteSync } from "./composables/useLegalRoute";
+import { useSiteSeo } from "./composables/useSiteSeo";
 //import { useHoverSound } from "./features/sounds/composables/useHoverSounds";
 
 const { isTransitioning } = useProjectTransition();
@@ -30,6 +31,7 @@ useHowler();
 useScroll();
 useRouteObserver();
 useLegalRouteSync();
+useSiteSeo();
 useClickSound();
 //useHoverSound();
 const { isTouch } = useAgent();

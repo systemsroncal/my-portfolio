@@ -153,7 +153,7 @@ watch(locale, () => {
     }
 
     .education-track {
-      padding-inline: 0;
+      padding-inline: var(--space-outer);
     }
 
     .education-slide {
@@ -237,23 +237,29 @@ watch(locale, () => {
     align-items: flex-start;
     gap: var(--space-md);
     width: max-content;
-    padding: var(--space-xs) 0 var(--space-md);
+    padding: var(--space-xs) var(--space-outer) var(--space-md);
     will-change: transform;
   }
 
   &-slide {
     box-sizing: border-box;
     flex: 0 0 calc(100vw - 2 * var(--space-outer));
-    padding-inline: var(--space-outer);
-
-    @supports (width: 100cqw) {
-      flex: 0 0 100cqw;
-    }
-
     height: auto;
     min-height: unset;
     display: flex;
     justify-content: center;
+
+    @supports (width: 100cqw) {
+      flex: 0 0 calc(100cqw - 2 * var(--space-outer));
+    }
+
+    @include mixins.mq("md") {
+      flex: 0 0 calc((100vw - 2 * var(--space-outer) - var(--space-md)) / 2);
+
+      @supports (width: 100cqw) {
+        flex: 0 0 calc((100cqw - 2 * var(--space-outer) - var(--space-md)) / 2);
+      }
+    }
   }
 
   &-slide-card {
@@ -261,6 +267,10 @@ watch(locale, () => {
     width: 100%;
     max-width: 1200px;
     margin-inline: auto;
+
+    @include mixins.mq("md") {
+      max-width: 100%;
+    }
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);

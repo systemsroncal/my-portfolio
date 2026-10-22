@@ -10,6 +10,8 @@ import { t } from "../../../i18n/utils/translate";
 import Plus from "../../../components/icons/Plus.vue";
 import { openContactMenu } from "../../../composables/useContactMenu";
 
+import { projectCoverThumb } from "../../../content/projects/previews/covers";
+
 import type { ProjectPreview } from "../../../content/types";
 
 const tlRef = ref<gsap.core.Timeline | null>(null);
@@ -58,7 +60,16 @@ onUnmounted(() => {
     <div class="preview-card-top" ref="wrapperRef">
       <div class="preview-card-image-wrapper">
         <div class="preview-card-image-container">
-          <img :src="props.preview.thumbnail" :alt="props.preview.title" class="preview-card-image" ref="imageRef" />
+          <img
+            :src="props.preview.thumbnail"
+            :alt="props.preview.title"
+            :width="projectCoverThumb.width"
+            :height="projectCoverThumb.height"
+            loading="lazy"
+            decoding="async"
+            class="preview-card-image"
+            ref="imageRef"
+          />
         </div>
       </div>
       <div class="preview-card-overlay">
