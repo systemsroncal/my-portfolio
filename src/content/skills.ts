@@ -98,9 +98,14 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     id: "methods",
-    name: { es: "Metodologías & ciclo de vida", en: "Methods & SDLC" },
+    name: { es: "Metodologías & fases del proyecto", en: "Methods & project phases" },
     items: [
-      "Ciclo de vida del software (análisis → diseño → desarrollo → implementación → pruebas → mejora continua)",
+      "Análisis de requisitos",
+      "Diseño de solución",
+      "Desarrollo",
+      "Implementación",
+      "Pruebas & QA",
+      "Mejora continua",
       "Scrum & Kanban",
       "ITIL® 4 & COBIT",
       "Coordinación de proyectos TI",
@@ -116,5 +121,5 @@ export const hologramSkills = [
   "ERP, CRM & CMS",
   "AWS & Cloud",
   "Agentes & IA dev",
-  "Ciclo de vida SW",
+  "Análisis → QA",
 ];

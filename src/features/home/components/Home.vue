@@ -194,6 +194,8 @@ watch(
     width: 100%;
     height: calc(var(--lvh) * 100);
     max-height: calc(var(--lvh) * 100);
+    z-index: 0;
+    pointer-events: none;
   }
 }
 
@@ -229,7 +231,10 @@ watch(
   }
 
   &-contact {
+    position: relative;
+    z-index: 2;
     width: 100%;
+    isolation: isolate;
   }
 }
 
